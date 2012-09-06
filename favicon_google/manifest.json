@@ -1,0 +1,24 @@
+{
+  "name": "Favicon and Social for Google in AutoPagerize",
+  "version": "0.9.0",
+  "manifest_version": 2,
+  "description": "Favicon and Social count is prepended Page Title of Google search results. Corresponds to the AutoPagerize.",
+  "icons": { "128": "img/google_128.png" },
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://www.google.com/search*", 
+      			  "http://www.google.co.jp/search*",
+      			  "https://www.google.com/search*",
+      			  "https://www.google.co.jp/search*"],
+      "css": ["css/background.css"],
+      "js": ["js/jquery-1.7.1.min.js", 
+      		 "js/background.js"]
+    }
+  ],
+  "options_page": "option.html"
+}

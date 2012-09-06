@@ -1,0 +1,32 @@
+#main {
+	padding:5px 15px 5px 5px;
+}
+img {
+	vertical-align:middle;
+	border: none;
+}
+img.picture {
+	margin:5px;
+	border:1px solid #888;
+	width:75px;
+	height:75px;
+}
+img.loadingImg {
+	padding:25px;
+	text-align:center;
+}
+.content {
+	height:90px;
+}
+.discription {
+	width:70%;
+	float:right;
+	padding:10px 0 0 0;
+}
+.picture {
+	float:left;
+}
+.link {
+}
+.title {
+}

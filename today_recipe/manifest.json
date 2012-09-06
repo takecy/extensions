@@ -1,0 +1,15 @@
+{
+	"name": "today's cooking",
+	"version": "0.0.2",
+	"manifest_version": 2,
+	"description": "today's cooking.",
+	"browser_action": {
+		"default_icon": "img/Recipe Book-128.png",
+		"popup": "popup.html"
+	},
+	"icons": {
+		"128": "img/Recipe Book-128.png"
+	},
+	"background_page": "background.html",
+	"permissions": ["tabs", "notifications", "http://www.nhk.or.jp/kurashi/*"]
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="css/common.css" rel="stylesheet">
+		<link href="css/pop_up.css" rel="stylesheet">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<script src="js/jquery-1.7.1.min.js"></script>
+		<script src="js/jquery.color.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/bootstrap-tab.js"></script>
+		<script src="js/bootstrap-tooltip.js"></script>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div id="refresh" class="span1 offset4">
+				<span class="btn btn-small"><i class="icon-refresh"></i></span>
+			</div>
+			<ul class="tabs nav nav-tabs">
+				<li class="active">
+					<a href="#notifies" data-toggle="tab">Updates</a>
+				</li>
+				<li>
+					<a href="#schedules" data-toggle="tab">Schedule</a>
+				</li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<section class="tab-pane active" id="notifies"></section>
+				<section class="tab-pane" id="schedules"></section>
+			</div>
+			<footer id="footer" class="span5">
+				<i class="icon-cog" id="settings"></i>
+				<i class="icon-question-sign" id="information"></i>
+			</footer>
+		</div>
+		<script src="js/pop_up.js"></script>
+	</body>
+</html>

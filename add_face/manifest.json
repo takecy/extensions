@@ -1,0 +1,14 @@
+{
+  "name": "Add Face for Cybouz",
+  "version": "0.2.1",
+  "manifest_version": 2,
+  "description": "Add Face for Cybouz.",
+  "icons": { "128": "img/smile_128.jpg" },
+  "content_scripts": [
+    {
+      "matches": ["https://caga.cyberagent.co.jp/*"],
+      "css": ["css/background.css"],
+      "js": ["js/jquery-1.7.1.min.js", "js/background.js"]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Better Cybozu",
+  "version": "0.3.2",
+  "manifest_version": 2,
+  "description": "Cybozu easy to use.",
+  "background": {
+   "page" : "background.html"
+  },
+  "icons": { "128": "img/ameba_128.png" },
+  "browser_action": {
+    "default_icon": "img/ameba_19.png",
+    "default_title": "Better Cybozu",
+    "default_popup": "popup.html"
+  },
+  "omnibox": { "keyword" : "ca" },
+  "icons": {
+    "16": "img/ameba_19.png",
+    "128": "img/ameba_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://caga.cyberagent.co.jp/cgi-bin/cbgrn/grn.cgi/schedule/personal_week*", 
+      			  "https://caga.cyberagent.co.jp/cgi-bin/cbgrn/grn.cgi/schedule/personal_day*"],
+      "css": ["css/user_script_cal.css", 
+      		  "css/bootstrap.css"],
+      "js": ["js/jquery-1.7.1.min.js", 
+      		 "js/jquery-ui-1.8.11.custom.min.js", 
+      		 "js/bootstrap.js", 
+      		 "js/bootstrap-tab.js", 
+      		 "js/user_script_cal.js"]
+    }
+  ],
+  "permissions": [
+    "notifications",
+    "tabs",
+    "https://caga.cyberagent.co.jp/*"
+  ]
+}
