@@ -1,33 +1,35 @@
 <!doctype html>
 <html>
 	<head>
-		<meta charset="UTF-8">
 		<title></title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link href="css/bootstrap-responsive.css" rel="stylesheet">
 		<link href="css/common.css" rel="stylesheet">
 		<link href="css/pop_up.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
-		<script src="js/jquery-1.7.1.min.js"></script>
+
+		<script src="js/jquery-1.8.1.min.js"></script>
 		<script src="js/jquery.color.js"></script>
 		<script src="js/bootstrap.js"></script>
-		<script src="js/bootstrap-tab.js"></script>
-		<script src="js/bootstrap-tooltip.js"></script>
 	</head>
 	<body>
-		<div class="wrapper">
+		<div class="container-fluid">
 			<div id="refresh" class="span1 offset4">
 				<span class="btn btn-small"><i class="icon-refresh"></i></span>
 			</div>
 			<ul class="tabs nav nav-tabs">
 				<li class="active">
-					<a href="#popular" data-toggle="tab">Updates</a>
+					<a href="#popular" data-toggle="tab">Popular</a>
 				</li>
 				<li>
-					<a href="#recent" data-toggle="tab">Schedule</a>
+					<a href="#recent" data-toggle="tab">Recent</a>
 				</li>
 			</ul>
 			<div id="myTabContent" class="tab-content">
-				<section class="tab-pane active" id="notifies"></section>
-				<section class="tab-pane" id="schedules"></section>
+				<section class="tab-pane active" id="populars"></section>
+				<section class="tab-pane" id="recents"></section>
 			</div>
 			<footer id="footer" class="span5">
 				<i class="icon-cog" id="settings"></i>
