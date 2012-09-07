@@ -2,7 +2,7 @@
   "name": "ALLbum by Ameba",
   "version": "0.3.2",
   "manifest_version": 2,
-  "description": "ALLbum official photo viewer.",
+  "description": "official photo viewer for ALLbum by Ameba.",
   "background": {
    "page" : "background.html"
   },
