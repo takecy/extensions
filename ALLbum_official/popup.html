@@ -15,26 +15,28 @@
 		<script src="js/bootstrap.js"></script>
 	</head>
 	<body>
-		<div class="container-fluid">
-			<div id="refresh" class="span1 offset4">
-				<span class="btn btn-small"><i class="icon-refresh"></i></span>
+		<div class="container">
+			<div class="span7">
+				<div id="refresh" class="span2 offset5">
+					<span class="btn btn-small"><i class="icon-refresh"></i></span>
+				</div>
+				<ul class="tabs nav nav-tabs">
+					<li class="active">
+						<a href="#populars" data-toggle="tab">Popular</a>
+					</li>
+					<li>
+						<a href="#recents" data-toggle="tab">Recent</a>
+					</li>
+				</ul>
+				<div id="myTabContent" class="tab-content">
+					<section class="tab-pane active" id="populars"></section>
+					<section class="tab-pane" id="recents"></section>
+				</div>
+				<footer id="footer" class="span1 offset4">
+					<i class="icon-cog" id="settings"></i>
+					<i class="icon-question-sign" id="information"></i>
+				</footer>
 			</div>
-			<ul class="tabs nav nav-tabs">
-				<li class="active">
-					<a href="#popular" data-toggle="tab">Popular</a>
-				</li>
-				<li>
-					<a href="#recent" data-toggle="tab">Recent</a>
-				</li>
-			</ul>
-			<div id="myTabContent" class="tab-content">
-				<section class="tab-pane active" id="populars"></section>
-				<section class="tab-pane" id="recents"></section>
-			</div>
-			<footer id="footer" class="span1 offset4">
-				<i class="icon-cog" id="settings"></i>
-				<i class="icon-question-sign" id="information"></i>
-			</footer>
 		</div>
 		<script src="js/pop_up.js"></script>
 	</body>
