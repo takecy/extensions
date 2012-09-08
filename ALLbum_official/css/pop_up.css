@@ -4,5 +4,24 @@
 　
 }
 div.container {
- width: 580px;   
+ width: 500px;   
+}
+
+#myTabContent {
+ min-height: 300px;
+}
+
+.thumbnails {
+  float : left;  
+}
+
+.thumbnails > li.thumbnailRow {
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+.nav-tabs > li > a {
+    -webkit-border-radius:0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
