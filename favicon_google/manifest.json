@@ -14,7 +14,9 @@
       "matches": ["http://www.google.com/search*", 
       			  "http://www.google.co.jp/search*",
       			  "https://www.google.com/search*",
-      			  "https://www.google.co.jp/search*"],
+      			  "https://www.google.co.jp/search*",
+      			  "http://search.yahoo.co.jp/search",
+      			  "https://search.yahoo.co.jp/search"],
       "css": ["css/background.css"],
       "js": ["js/jquery-1.7.1.min.js", 
       		 "js/background.js"]
