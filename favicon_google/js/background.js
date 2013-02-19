@@ -2,7 +2,7 @@ $(function() {
 
     //API url
     var hatenaApi = 'http://b.hatena.ne.jp/entry/jsonlite/';
-    var likeApi = 'https://graph.facebook.com/';
+    var facebookApi = 'https://graph.facebook.com/';
     var tweetApi = 'http://urls.api.twitter.com/1/urls/count.json?url=';
 
 	var setFavicon = function() {
@@ -80,7 +80,7 @@ $(function() {
 
             
             //like
-            setSbmInfo($likeSpan, url, likeApi, $likeIcon, 'like', function(json){
+            setSbmInfo($likeSpan, url, facebookApi, $likeIcon, 'like', function(json){
                 var count = json['shares'];
                 if(!count) return 0;
                 return count;
