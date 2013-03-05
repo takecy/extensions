@@ -1,5 +1,5 @@
-var sbm_counter;
-(function (sbm_counter) {
+var social_counter_bg;
+(function (social_counter_bg) {
     var Urls = (function () {
         function Urls() {
             this.hatena = 'http://b.hatena.ne.jp/entry/jsonlite/';
@@ -35,4 +35,4 @@ var sbm_counter;
         };
         return countService;
     })();    
-})(sbm_counter || (sbm_counter = {}));
+})(social_counter_bg || (social_counter_bg = {}));

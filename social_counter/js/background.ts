@@ -1,6 +1,6 @@
 /// <reference path="jquery.d.ts" /> 
 
-module sbm_counter {
+module social_counter_bg {
 	
 	class Urls {
 		private hatena: string = 'http://b.hatena.ne.jp/entry/jsonlite/';
@@ -23,9 +23,7 @@ module sbm_counter {
 
 	}
 
-	/**
-	* カウント取得
-	*/
+	//カウント取得
 	class countService {
 
 		getCount(apiUrl: string, targetUrl: string): number {

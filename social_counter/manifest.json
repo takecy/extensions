@@ -5,17 +5,18 @@
   "description": "Social counter",
   "icons": { "128": "img/google_128.png" },
   "permissions": [
-    "http://*/*",
-    "https://*/*",
+    "http://b.hatena.ne.jp/*",
+    "https://graph.facebook.com/*",
+    "http://urls.api.twitter.com/*",
     "tabs"
   ],
    "browser_action": {
-    "default_icon": {                    // optional
-      "19": "img/google_128.png",           // optional
-      "38": "img/google_128.png"            // optional
+    "default_icon": {
+      "19": "img/google_128.png",
+      "38": "img/google_128.png"
     },
-    "default_title": "Google Mail",      // optional; shown in tooltip
-    "default_popup": "popup.html"        // optional
+    "default_title": "Google Mail",
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": ["js/background.js"],
