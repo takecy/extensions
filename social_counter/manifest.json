@@ -1,0 +1,24 @@
+{
+  "name": "Social counter",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Social counter",
+  "icons": { "128": "img/google_128.png" },
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs"
+  ],
+   "browser_action": {
+    "default_icon": {                    // optional
+      "19": "img/google_128.png",           // optional
+      "38": "img/google_128.png"            // optional
+    },
+    "default_title": "Google Mail",      // optional; shown in tooltip
+    "default_popup": "popup.html"        // optional
+  },
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  }
+}
