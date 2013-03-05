@@ -41,6 +41,8 @@ var social_counter_bg;
         tabService.prototype.getCurrentTabUrl = function (tab) {
             return null;
         };
+        tabService.prototype.onClickEvent = function () {
+        };
         return tabService;
     })();    
 })(social_counter_bg || (social_counter_bg = {}));

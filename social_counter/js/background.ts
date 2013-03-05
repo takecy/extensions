@@ -54,6 +54,10 @@ module social_counter_bg {
 			return null;
 		}
 
+		onClickEvent(): void {
+			
+		}
+
 
 
 	}
