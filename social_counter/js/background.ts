@@ -42,4 +42,19 @@ module social_counter_bg {
 			return null;
 		}
 	}
+
+	//現在表示中のタブのURLを取得
+	class tabService {
+		constructor() {
+
+		}
+
+		getCurrentTabUrl(tab): string {
+
+			return null;
+		}
+
+
+
+	}
 }

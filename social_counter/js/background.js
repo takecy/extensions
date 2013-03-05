@@ -35,4 +35,12 @@ var social_counter_bg;
         };
         return countService;
     })();    
+    var tabService = (function () {
+        function tabService() {
+        }
+        tabService.prototype.getCurrentTabUrl = function (tab) {
+            return null;
+        };
+        return tabService;
+    })();    
 })(social_counter_bg || (social_counter_bg = {}));
