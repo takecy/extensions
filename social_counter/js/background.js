@@ -92,6 +92,12 @@ var ChromeApi;
     }
     ChromeApi.getCurrentTabUrl = getCurrentTabUrl;
 })(ChromeApi || (ChromeApi = {}));
+var Request;
+(function (Request) {
+    function sendRequest() {
+    }
+    Request.sendRequest = sendRequest;
+})(Request || (Request = {}));
 var Processor;
 (function (Processor) {
     ChromeApi.setBadgeText({

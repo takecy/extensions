@@ -96,6 +96,12 @@ module ChromeApi {
 	}
 }
 
+module Request {
+	export function sendRequest() {
+
+	}
+}
+
 module Processor {
 	ChromeApi.setBadgeText({text:'9999'});
 	ChromeApi.setBadgeBgColor({color:'#FF0000'});

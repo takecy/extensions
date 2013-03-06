@@ -9,4 +9,5 @@ module Service {
 
 module Processor {
 	var bgPage = Service.getBgPage();
+	console.log(bgPage);
 }
