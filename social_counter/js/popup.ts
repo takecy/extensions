@@ -1,3 +1,5 @@
+/// <reference path="jquery.d.ts" /> 
+
 module Service {
 	
 	export function getBgPage() {
