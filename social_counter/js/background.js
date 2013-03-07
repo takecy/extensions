@@ -1,9 +1,23 @@
 var Service;
 (function (Service) {
     var HatenaService = (function () {
-        function HatenaService() { }
-        HatenaService.prototype.getCount = function () {
-            return 'http://b.hatena.ne.jp/entry/jsonlite/';
+        function HatenaService() {
+            this.apiUrl = 'http://b.hatena.ne.jp/entry/jsonlite/';
+        }
+        HatenaService.prototype.getCount = function (targetUrl) {
+            var apiJson = null;
+            fetchApi(this.apiUrl, targetUrl).done(function (json, dataType) {
+                console.log('success');
+                console.log(json);
+                console.log(dataType);
+                apiJson = json;
+            }).fail(function () {
+                console.log('fail');
+            });
+            if(apiJson) {
+                return apiJson['count'];
+            }
+            return 0;
         };
         HatenaService.prototype.parseJson = function (json) {
             if(json) {
@@ -15,11 +29,26 @@ var Service;
             return;
         };
         return HatenaService;
-    })();    
+    })();
+    Service.HatenaService = HatenaService;    
     var TwitterService = (function () {
-        function TwitterService() { }
-        TwitterService.prototype.getCount = function () {
-            return 'http://urls.api.twitter.com/1/urls/count.json?url=';
+        function TwitterService() {
+            this.apiUrl = 'http://urls.api.twitter.com/1/urls/count.json?url=';
+        }
+        TwitterService.prototype.getCount = function (targetUrl) {
+            var apiJson = null;
+            fetchApi(this.apiUrl, targetUrl).done(function (json, dataType) {
+                console.log('success');
+                console.log(json);
+                console.log(dataType);
+                apiJson = json;
+            }).fail(function () {
+                console.log('fail');
+            });
+            if(apiJson) {
+                return apiJson['count'];
+            }
+            return 0;
         };
         TwitterService.prototype.parseJson = function (json) {
             return json['count'];
@@ -28,11 +57,26 @@ var Service;
             return;
         };
         return TwitterService;
-    })();    
+    })();
+    Service.TwitterService = TwitterService;    
     var FacebookService = (function () {
-        function FacebookService() { }
-        FacebookService.prototype.getCount = function () {
-            return 'https://graph.facebook.com/';
+        function FacebookService() {
+            this.apiUrl = 'https://graph.facebook.com/';
+        }
+        FacebookService.prototype.getCount = function (targetUrl) {
+            var apiJson = null;
+            fetchApi(this.apiUrl, targetUrl).done(function (json, dataType) {
+                console.log('success');
+                console.log(json);
+                console.log(dataType);
+                apiJson = json;
+            }).fail(function () {
+                console.log('fail');
+            });
+            if(apiJson) {
+                return apiJson['shares'];
+            }
+            return 0;
         };
         FacebookService.prototype.parseJson = function (json) {
             var count = json['shares'];
@@ -45,24 +89,25 @@ var Service;
             return;
         };
         return FacebookService;
-    })();    
+    })();
+    Service.FacebookService = FacebookService;    
     function fetchApi(apiUrl, targetUrl) {
+        var deferred = $.Deferred();
         $.ajax({
             type: 'GET',
             url: apiUrl + targetUrl,
             dataType: 'json'
         }).done(function (json, dataType) {
+            console.log('success');
             console.log(json);
+            deferred.resolve(json, dataType);
         }).fail(function () {
+            console.log('fail');
+            deferred.reject();
         });
+        return deferred.promise();
     }
     ;
-    function exec(targetUrl) {
-        var hatena = new HatenaService();
-        var facebook = new FacebookService();
-        var twitter = new TwitterService();
-    }
-    Service.exec = exec;
 })(Service || (Service = {}));
 var ChromeApi;
 (function (ChromeApi) {
@@ -83,22 +128,17 @@ var ChromeApi;
         });
     }
     ChromeApi.setBadge = setBadge;
-    function getCurrentTabUrl(callback) {
-        console.log('[callback]' + callback);
-        if(!callback) {
-            return;
-        }
+    function getCurrentTabUrl() {
+        var deferred = $.Deferred();
         chrome.tabs.getCurrent(function (tab) {
             console.log(tab);
             if(!tab) {
-                return callback(null);
+                deferred.reject();
+            } else {
+                deferred.resolve(tab.url);
             }
-            var id = tab.id;
-            var title = tab.title;
-            var favicon = tab.faviconUrl;
-            var targetUrl = tab.url;
-            callback(tab);
         });
+        return deferred.promise();
     }
     ChromeApi.getCurrentTabUrl = getCurrentTabUrl;
     function openTab(url, callback) {
@@ -130,6 +170,23 @@ var Processor;
 (function (Processor) {
     var badge = new ChromeApi.Badge('9999', '#FF0000');
     ChromeApi.setBadge(badge);
-    ChromeApi.getCurrentTabUrl(null);
-    Service.exec(null);
+    var targetUrl = 'http://google.co.jp';
+    ChromeApi.getCurrentTabUrl().done(function (url) {
+        console.log('success');
+        console.log(url);
+        targetUrl = url;
+    }).fail(function () {
+        console.log('fail');
+    });
+    function getCountAll(targetUrl) {
+        var hatena = new Service.HatenaService();
+        var facebook = new Service.FacebookService();
+        var twitter = new Service.TwitterService();
+        var hatenaCount = hatena.getCount(targetUrl);
+        console.log('[hatenaCount]' + hatenaCount);
+        var likeCount = facebook.getCount(targetUrl);
+        console.log('[likeCount]' + likeCount);
+        var tweetCount = twitter.getCount(targetUrl);
+        console.log('[tweetCount]' + tweetCount);
+    }
 })(Processor || (Processor = {}));
