@@ -47,7 +47,6 @@ var Service;
         return FacebookService;
     })();    
     function fetchApi(targetUrl) {
-        var dc = $.Deferred;
         $.ajax({
             type: 'GET',
             url: providerService.getApiUrl() + targetUrl,

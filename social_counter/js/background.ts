@@ -7,7 +7,7 @@ module Service {
 		parseJson: (json: string) => number;
 		render: (count: number) => void;
 	}
-	
+
 	class HatenaService implements IProviderService {
 		getApiUrl(): string {
 			return 'http://b.hatena.ne.jp/entry/jsonlite/';
@@ -50,8 +50,7 @@ module Service {
 		}
 	}
 
-	function fetchApi(targetUrl: string) {
-		var dc = $.Deferred;
+	function fetchApi(targetUrl: string) {	
 		$.ajax({
             type : 'GET',
             url : providerService.getApiUrl() + targetUrl,
