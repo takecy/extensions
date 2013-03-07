@@ -7,7 +7,7 @@ module Service {
 		parseJson: (json: string) => number;
 		render: (count: number) => void;
 	}
-	
+
 	class HatenaService implements IProviderService {
 		getCount(): string {
 			return 'http://b.hatena.ne.jp/entry/jsonlite/';
@@ -50,7 +50,7 @@ module Service {
 		}
 	}
 
-	function fetchApi(apiUrl: string, targetUrl: string) {
+	function fetchApi(apiUrl: string, targetUrl: string) {	
 //		var dc = $.Deferred;
 		$.ajax({
             type : 'GET',
