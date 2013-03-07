@@ -9,7 +9,7 @@ module Service {
 	}
 
 	class HatenaService implements IProviderService {
-		getApiUrl(): string {
+		getCount(): string {
 			return 'http://b.hatena.ne.jp/entry/jsonlite/';
 		}
 		parseJson(json: string): number {
@@ -23,7 +23,7 @@ module Service {
 	}
 
 	class TwitterService implements IProviderService {
-		getApiUrl(): string {
+		getCount(): string {
 			return 'http://urls.api.twitter.com/1/urls/count.json?url=';
 		}
 		parseJson(json: string): number {
@@ -36,7 +36,7 @@ module Service {
 	}
 
 	class FacebookService implements IProviderService {
-		getApiUrl(): string {
+		getCount(): string {
 			return 'https://graph.facebook.com/';
 		}
 		parseJson(json: string): number {
@@ -51,16 +51,17 @@ module Service {
 	}
 
 	function fetchApi(targetUrl: string) {	
+//		var dc = $.Deferred;
 		$.ajax({
             type : 'GET',
-            url : providerService.getApiUrl() + targetUrl,
+            url : apiUrl + targetUrl,
             dataType : 'json'
         })
         .done(function(json, dataType){
             	console.log(json);
-                var count = providerService.parseJson(json);
-                console.log(count);
-        		providerService.render(count);
+//                var count = providerService.parseJson(json);
+//                console.log(count);
+//       		providerService.render(count);
         })
         .fail(function(){
         	//TODO	
@@ -76,13 +77,13 @@ module Service {
 
 module ChromeApi {
 	export class Badge {
-		constructor(public text: string, public color: stinrg) { }
+		constructor(public text: string, public color: string) { }
 	}
 	export function setBadge(badge: Badge) {
 		chrome.browserAction.setBadgeText({text: badge.text});
 		chrome.browserAction.setBadgeBackgroundColor({color: badge.color});
 	}
-	export function getCurrentTabUrl(callback: (tab: Tab) => any) {
+	export function getCurrentTabUrl(callback: (tab: any) => any) {
 		console.log('[callback]' + callback);
 		if(!callback) return;
 
@@ -127,6 +128,6 @@ module Processor {
 	var badge = new ChromeApi.Badge('9999', '#FF0000');
 	ChromeApi.setBadge(badge);
 
-	ChromeApi.getCurrentTabUrl();
-	Service.exec(targetUrl);
+	ChromeApi.getCurrentTabUrl(null);
+	Service.exec(null);
 }
