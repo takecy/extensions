@@ -50,7 +50,7 @@ module Service {
 		}
 	}
 
-	function fetchApi(apiUrl: string, targetUrl: string) {	
+	function fetchApi(targetUrl: string) {	
 //		var dc = $.Deferred;
 		$.ajax({
             type : 'GET',
