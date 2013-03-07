@@ -15,14 +15,12 @@ module Service {
 		getCount(targetUrl: string): number {
 			var apiJson = null;
 			fetchApi(this.apiUrl, targetUrl)
-			.done(function(json, dataType){
-				console.log('success');
-				console.log(json);
-				console.log(dataType);
+			.done(function(json){
+				console.log('[hatena]' + json);
 				apiJson = json;
 			})
 			.fail(function(){
-				console.log('fail');
+				console.log('[hatena]' + 'fail');
 			});
 
             if(apiJson) return apiJson['count'];
@@ -44,14 +42,12 @@ module Service {
 		getCount(targetUrl: string): number {
 			var apiJson = null;
 			fetchApi(this.apiUrl, targetUrl)
-			.done(function(json, dataType){
-				console.log('success');
-				console.log(json);
-				console.log(dataType);
+			.done(function(json){
+				console.log('[twitter]' + json);
 				apiJson = json;
 			})
 			.fail(function(){
-				console.log('fail');
+				console.log('[twitter]' + 'fail');
 			});
 
             if(apiJson) return apiJson['count'];
@@ -72,14 +68,12 @@ module Service {
 		getCount(targetUrl: string): number {
 			var apiJson = null;
 			fetchApi(this.apiUrl, targetUrl)
-			.done(function(json, dataType){
-				console.log('success');
-				console.log(json);
-				console.log(dataType);
+			.done(function(json){
+				console.log('[facebook]' + json);
 				apiJson = json;
 			})
 			.fail(function(){
-				console.log('fail');
+				console.log('[facebook]' + 'fail');
 			});
 
             if(apiJson) return apiJson['shares'];
@@ -97,6 +91,9 @@ module Service {
 	}
 
 	function fetchApi(apiUrl: string, targetUrl: string) {	
+    	console.log('[fetchApi]' + apiUrl);
+    	console.log('[fetchApi]' + targetUrl);
+
 		var deferred = $.Deferred();
 		$.ajax({
             type : 'GET',
@@ -104,12 +101,12 @@ module Service {
             dataType : 'json'
         })
         .done(function(json, dataType) {
-        	console.log('success');
-        	console.log(json);
+        	console.log('[fetchApi]' + dataType);
+        	console.log('[fetchApi]' + json);
         	deferred.resolve(json, dataType);
     	})
     	.fail(function() {
-        	console.log('fail');
+        	console.log('[fetchApi]' + 'fail');
     		deferred.reject();	
 		});
 
@@ -117,7 +114,7 @@ module Service {
     };
 }
 
-module ChromeApi {
+module TabService {
 	export class Badge {
 		constructor(public text: string, public color: string) { }
 	}
@@ -125,14 +122,19 @@ module ChromeApi {
 		chrome.browserAction.setBadgeText({text: badge.text});
 		chrome.browserAction.setBadgeBackgroundColor({color: badge.color});
 	}
+
+	//TODO when tab selected and updated, add listner event.
 	export function getCurrentTabUrl() {
 		var deferred = $.Deferred();
 
 		chrome.tabs.getCurrent(function(tab){
-			console.log(tab);
+			console.log('[tab]' + tab);
 			//取得不許可のページの場合
-			if(!tab) deferred.reject();
-			else deferred.resolve(tab.url);
+			if(!tab) {
+				deferred.reject();
+			} else {
+				deferred.resolve(tab.url);
+			}
 		});		
 			
 		return deferred.promise();
@@ -161,22 +163,21 @@ module Message {
 }
 
 module Processor {
-	var badge = new ChromeApi.Badge('9999', '#FF0000');
-	ChromeApi.setBadge(badge);
+	var badge = new TabService.Badge('9999', '#FF0000');
+	TabService.setBadge(badge);
 
 	var targetUrl = 'http://google.co.jp';
-	ChromeApi.getCurrentTabUrl()
+	TabService.getCurrentTabUrl()
 	.done(function(url){
-		console.log('success');
-		console.log(url);
+		console.log('[tab]' + url);
 		targetUrl = url;
 	})
 	.fail(function(){
-		console.log('fail');
+		console.log('[tab]' + 'fail');
 	});
 
 
-	function getCountAll(targetUrl: string) {
+	(function() {
 		var hatena = new Service.HatenaService();
 		var facebook = new Service.FacebookService();
 		var twitter = new Service.TwitterService();
@@ -184,11 +185,11 @@ module Processor {
 		var hatenaCount = hatena.getCount(targetUrl);
 		console.log('[hatenaCount]' + hatenaCount);
 
-		var likeCount = facebook.getCount(targetUrl);
-		console.log('[likeCount]' + likeCount);
+//		var likeCount = facebook.getCount(targetUrl);
+//		console.log('[likeCount]' + likeCount);
 
-		var tweetCount = twitter.getCount(targetUrl);
-		console.log('[tweetCount]' + tweetCount);
-	}
+//		var tweetCount = twitter.getCount(targetUrl);
+//		console.log('[tweetCount]' + tweetCount);
+	})();
 
 }
