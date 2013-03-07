@@ -2,7 +2,7 @@ var Service;
 (function (Service) {
     var HatenaService = (function () {
         function HatenaService() { }
-        HatenaService.prototype.getApiUrl = function () {
+        HatenaService.prototype.getCount = function () {
             return 'http://b.hatena.ne.jp/entry/jsonlite/';
         };
         HatenaService.prototype.parseJson = function (json) {
@@ -18,7 +18,7 @@ var Service;
     })();    
     var TwitterService = (function () {
         function TwitterService() { }
-        TwitterService.prototype.getApiUrl = function () {
+        TwitterService.prototype.getCount = function () {
             return 'http://urls.api.twitter.com/1/urls/count.json?url=';
         };
         TwitterService.prototype.parseJson = function (json) {
@@ -31,7 +31,7 @@ var Service;
     })();    
     var FacebookService = (function () {
         function FacebookService() { }
-        FacebookService.prototype.getApiUrl = function () {
+        FacebookService.prototype.getCount = function () {
             return 'https://graph.facebook.com/';
         };
         FacebookService.prototype.parseJson = function (json) {
@@ -46,17 +46,13 @@ var Service;
         };
         return FacebookService;
     })();    
-    function fetchApi(targetUrl) {
-        var dc = $.Deferred;
+    function fetchApi(apiUrl, targetUrl) {
         $.ajax({
             type: 'GET',
-            url: providerService.getApiUrl() + targetUrl,
+            url: apiUrl + targetUrl,
             dataType: 'json'
         }).done(function (json, dataType) {
             console.log(json);
-            var count = providerService.parseJson(json);
-            console.log(count);
-            providerService.render(count);
         }).fail(function () {
         });
     }
@@ -134,6 +130,6 @@ var Processor;
 (function (Processor) {
     var badge = new ChromeApi.Badge('9999', '#FF0000');
     ChromeApi.setBadge(badge);
-    ChromeApi.getCurrentTabUrl();
-    Service.exec(targetUrl);
+    ChromeApi.getCurrentTabUrl(null);
+    Service.exec(null);
 })(Processor || (Processor = {}));
