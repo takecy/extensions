@@ -3,7 +3,7 @@
 module Service {
 
 	interface IProviderService {
-		getApiUrl: () => string;
+		getCount: () => string;
 		parseJson: (json: string) => number;
 		render: (count: number) => void;
 	}
@@ -50,24 +50,25 @@ module Service {
 		}
 	}
 
-	function fetchApi(targetUrl: string, providerService: IProviderService) {
+	function fetchApi(targetUrl: string) {
+		var dc = $.Deferred;
 		$.ajax({
             type : 'GET',
             url : providerService.getApiUrl() + targetUrl,
-            dataType : 'json',
-            success : function(json, dataType){
+            dataType : 'json'
+        })
+        .done(function(json, dataType){
             	console.log(json);
                 var count = providerService.parseJson(json);
                 console.log(count);
         		providerService.render(count);
-            },
-            error : function() {
-            	//TODO
-            }
-        });
+        })
+        .fail(function(){
+        	//TODO	
+    	});
     };
 
-	export function exec() {
+	export function exec(targetUrl: string) {
 		var hatena = new HatenaService();
 		var facebook = new FacebookService();
 		var twitter = new TwitterService();
@@ -75,30 +76,58 @@ module Service {
 }
 
 module ChromeApi {
-	export function setBadgeText(detail) {
-		chrome.browserAction.setBadgeText(detail);
+	export class Badge {
+		constructor(public text: string, public color: stinrg) { }
 	}
-	export function setBadgeBgColor(detail) {
-		chrome.browserAction.setBadgeBackgroundColor(detail);
+	export function setBadge(badge: Badge) {
+		chrome.browserAction.setBadgeText({text: badge.text});
+		chrome.browserAction.setBadgeBackgroundColor({color: badge.color});
 	}
-	export function getCurrentTabUrl(callback) {
+	export function getCurrentTabUrl(callback: (tab: Tab) => any) {
+		console.log('[callback]' + callback);
+		if(!callback) return;
+
 		chrome.tabs.getCurrent(function(tab){
 			console.log(tab);
-			alert(tab);
+			//取得不許可のページの場合
+			if(!tab) return callback(null);
+
 			//TODO
 			var id = tab.id;
 			var title = tab.title;
 			var favicon = tab.faviconUrl;
 			var targetUrl = tab.url;
 
-			callback(targetUrl);
+			callback(tab);
 		});		
+	}
+	export function openTab(url: string, callback: any) {
+		chrome.tabs.create({url: url}, callback);
+	}
+}
+
+module Message {
+	export function sendRequest(request: string, callback: any) {
+		chrome.extension.sendRequest({id: request}, callback);
+	}
+	function receiveRequest() {
+		chrome.extension.onRequest.addListener(function(request, sender, callback) {
+			var id = request.id;
+			if(id === "getCount") {
+
+			} else if (id === "refresh") {
+
+			} else if (id === "delCache") {
+
+			}
+		});
 	}
 }
 
 module Processor {
-	ChromeApi.setBadgeText({text:'9999'});
-	ChromeApi.setBadgeBgColor({color:'#FF0000'});
+	var badge = new ChromeApi.Badge('9999', '#FF0000');
+	ChromeApi.setBadge(badge);
 
-	Service.exec();
+	ChromeApi.getCurrentTabUrl();
+	Service.exec(targetUrl);
 }

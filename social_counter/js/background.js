@@ -46,23 +46,22 @@ var Service;
         };
         return FacebookService;
     })();    
-    function fetchApi(targetUrl, providerService) {
+    function fetchApi(targetUrl) {
+        var dc = $.Deferred;
         $.ajax({
             type: 'GET',
             url: providerService.getApiUrl() + targetUrl,
-            dataType: 'json',
-            success: function (json, dataType) {
-                console.log(json);
-                var count = providerService.parseJson(json);
-                console.log(count);
-                providerService.render(count);
-            },
-            error: function () {
-            }
+            dataType: 'json'
+        }).done(function (json, dataType) {
+            console.log(json);
+            var count = providerService.parseJson(json);
+            console.log(count);
+            providerService.render(count);
+        }).fail(function () {
         });
     }
     ;
-    function exec() {
+    function exec(targetUrl) {
         var hatena = new HatenaService();
         var facebook = new FacebookService();
         var twitter = new TwitterService();
@@ -71,34 +70,70 @@ var Service;
 })(Service || (Service = {}));
 var ChromeApi;
 (function (ChromeApi) {
-    function setBadgeText(detail) {
-        chrome.browserAction.setBadgeText(detail);
+    var Badge = (function () {
+        function Badge(text, color) {
+            this.text = text;
+            this.color = color;
+        }
+        return Badge;
+    })();
+    ChromeApi.Badge = Badge;    
+    function setBadge(badge) {
+        chrome.browserAction.setBadgeText({
+            text: badge.text
+        });
+        chrome.browserAction.setBadgeBackgroundColor({
+            color: badge.color
+        });
     }
-    ChromeApi.setBadgeText = setBadgeText;
-    function setBadgeBgColor(detail) {
-        chrome.browserAction.setBadgeBackgroundColor(detail);
-    }
-    ChromeApi.setBadgeBgColor = setBadgeBgColor;
+    ChromeApi.setBadge = setBadge;
     function getCurrentTabUrl(callback) {
+        console.log('[callback]' + callback);
+        if(!callback) {
+            return;
+        }
         chrome.tabs.getCurrent(function (tab) {
             console.log(tab);
-            alert(tab);
+            if(!tab) {
+                return callback(null);
+            }
             var id = tab.id;
             var title = tab.title;
             var favicon = tab.faviconUrl;
             var targetUrl = tab.url;
-            callback(targetUrl);
+            callback(tab);
         });
     }
     ChromeApi.getCurrentTabUrl = getCurrentTabUrl;
+    function openTab(url, callback) {
+        chrome.tabs.create({
+            url: url
+        }, callback);
+    }
+    ChromeApi.openTab = openTab;
 })(ChromeApi || (ChromeApi = {}));
+var Message;
+(function (Message) {
+    function sendRequest(request, callback) {
+        chrome.extension.sendRequest({
+            id: request
+        }, callback);
+    }
+    Message.sendRequest = sendRequest;
+    function receiveRequest() {
+        chrome.extension.onRequest.addListener(function (request, sender, callback) {
+            var id = request.id;
+            if(id === "getCount") {
+            } else if(id === "refresh") {
+            } else if(id === "delCache") {
+            }
+        });
+    }
+})(Message || (Message = {}));
 var Processor;
 (function (Processor) {
-    ChromeApi.setBadgeText({
-        text: '9999'
-    });
-    ChromeApi.setBadgeBgColor({
-        color: '#FF0000'
-    });
-    Service.exec();
+    var badge = new ChromeApi.Badge('9999', '#FF0000');
+    ChromeApi.setBadge(badge);
+    ChromeApi.getCurrentTabUrl();
+    Service.exec(targetUrl);
 })(Processor || (Processor = {}));
