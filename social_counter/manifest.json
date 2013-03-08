@@ -16,7 +16,7 @@
       "38": "img/google_128.png"
     },
     "default_title": "Social Counter",
-    //これを指定しているとonClickedイベント拾えない
+    //これを指定しているとアイコンのonClickedイベント拾えない
     "default_popup": "popup.html"
   },
   "background": {
