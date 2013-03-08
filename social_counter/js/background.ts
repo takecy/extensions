@@ -65,7 +65,8 @@ module Processor {
 		console.log('[onUpdated]' + tabId);
 		console.log('[onUpdated]' + tabUrl);
 
-		var countInfo_before = localStorage.getItem(tabId);
+		//TODO
+		var countInfo_before = JSON.parse(localStorage.getItem(tabId));
 		if(typeof countInfo_before === 'undefined') var totalCount_before = 0;
 		else var totalCount_before = countInfo_before.total.count;
 
