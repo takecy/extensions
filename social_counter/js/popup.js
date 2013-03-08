@@ -1,27 +1,22 @@
-var Service;
-(function (Service) {
-    function getBgPage() {
-        return chrome.extension.getBackgroundPage();
-    }
-    Service.getBgPage = getBgPage;
-    function sendRequest(request, callback) {
-        chrome.extension.sendRequest({
-            id: request
-        }, callback);
-    }
-    Service.sendRequest = sendRequest;
-    function receiveRequest() {
-        chrome.extension.onRequest.addListener(function (request, sender, callback) {
-            var id = request.id;
-            if(id === "getCount") {
-            } else if(id === "refresh") {
-            } else if(id === "delCache") {
-            }
-        });
-    }
-})(Service || (Service = {}));
 var Processor;
 (function (Processor) {
-    var bgPage = Service.getBgPage();
-    console.log(bgPage);
+    (function () {
+        TabService.getCurrentTab().done(function (tab) {
+            var tabId = tab.id.toString();
+            var tabUrl = tab.url.trim();
+            console.log('[current tab]' + tabId);
+            console.log('[current tab]' + tabUrl);
+            var countInfo = JSON.parse(localStorage.getItem(tabId));
+            console.log(countInfo);
+            var hatenaCount = countInfo.hatenaCount;
+            var likeCount = countInfo.likeCount;
+            var tweetCount = countInfo.tweetCount;
+            var totalCount = countInfo.totalCount;
+            console.log('[hatena]' + hatenaCount);
+            console.log('[like]' + likeCount);
+            console.log('[tweet]' + tweetCount);
+        }).fail(function () {
+            console.log('[current tab]' + 'fail');
+        });
+    })();
 })(Processor || (Processor = {}));

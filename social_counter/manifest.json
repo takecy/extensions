@@ -8,6 +8,8 @@
     "http://b.hatena.ne.jp/*",
     "https://graph.facebook.com/*",
     "http://urls.api.twitter.com/*",
+    "http://*/*",
+    "https://*/*",
     "tabs"
   ],
    "browser_action": {
@@ -20,7 +22,7 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "page": "background.html",
+    "scripts": ["js/jquery-1.9.1.min.js", "js/service.js", "js/background.js"],
     "persistent": false
   }
 }
