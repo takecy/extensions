@@ -23,8 +23,16 @@ module Processor {
 			var totalCount = countInfo.totalCount;
 
 			console.log('[hatena]' + hatenaCount);
-			console.log('[like]' + likeCount);
 			console.log('[tweet]' + tweetCount);
+			console.log('[like]' + likeCount);
+
+			var hatenaCountSpan = $('<span>').addClass('counter').text(hatenaCount);
+			$('#hatena').append(hatenaCountSpan);
+			var twitterCountSpan = $('<span>').addClass('counter').text(tweetCount);
+			$('#twitter').append(twitterCountSpan);
+			var facebookCountSpan = $('<span>').addClass('counter').text(likeCount);
+			$('#fb').append(facebookCountSpan);
+
 
 		})
 		.fail(function(){

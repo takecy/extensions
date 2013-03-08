@@ -1,6 +1,12 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family:'メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+	font-size: 0.95em;
+}
 body {
-	min-width: 200px;
-	min-height: 200px;
+	min-width: 70px;
+	min-height: 70px;
 }
 #hatena {
 
@@ -12,5 +18,5 @@ body {
 
 }
 .counter {
-	
+	margin-left: 10px;
 }
