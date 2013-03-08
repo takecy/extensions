@@ -1,5 +1,5 @@
-var Service;
-(function (Service) {
+var ProviderService;
+(function (ProviderService) {
     var HatenaService = (function () {
         function HatenaService() {
             this.apiUrl = 'http://b.hatena.ne.jp/entry/jsonlite/';
@@ -28,7 +28,7 @@ var Service;
         };
         return HatenaService;
     })();
-    Service.HatenaService = HatenaService;    
+    ProviderService.HatenaService = HatenaService;    
     var TwitterService = (function () {
         function TwitterService() {
             this.apiUrl = 'http://urls.api.twitter.com/1/urls/count.json?url=';
@@ -54,7 +54,7 @@ var Service;
         };
         return TwitterService;
     })();
-    Service.TwitterService = TwitterService;    
+    ProviderService.TwitterService = TwitterService;    
     var FacebookService = (function () {
         function FacebookService() {
             this.apiUrl = 'https://graph.facebook.com/';
@@ -84,7 +84,7 @@ var Service;
         };
         return FacebookService;
     })();
-    Service.FacebookService = FacebookService;    
+    ProviderService.FacebookService = FacebookService;    
     function fetchApi(apiUrl, targetUrl) {
         console.log('[fetchApi]' + apiUrl);
         console.log('[fetchApi]' + targetUrl);
@@ -104,7 +104,7 @@ var Service;
         return deferred.promise();
     }
     ;
-})(Service || (Service = {}));
+})(ProviderService || (ProviderService = {}));
 var TabService;
 (function (TabService) {
     var Badge = (function () {
@@ -174,9 +174,9 @@ var Processor;
         console.log('[tab]' + 'fail');
     });
     (function () {
-        var hatena = new Service.HatenaService();
-        var facebook = new Service.FacebookService();
-        var twitter = new Service.TwitterService();
+        var hatena = new ProviderService.HatenaService();
+        var facebook = new ProviderService.FacebookService();
+        var twitter = new ProviderService.TwitterService();
         var hatenaCount = hatena.getCount(targetUrl);
         console.log('[hatenaCount]' + hatenaCount);
     })();

@@ -1,0 +1,19 @@
+{
+  "name": "Keyboard Pin",
+  "version": "0.2",
+  "description": "toggle the pinned state of ALL tabs in the currently selected window",
+  "permissions": [
+    "tabs"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": ["js/background.js"]
+  },
+  "commands": {
+    "toggle-pin": {
+      "suggested_key": { "default": "Alt+Shift+Q" },
+      "description": "Toggle tab pin"
+    }
+  },
+  "manifest_version": 2
+}

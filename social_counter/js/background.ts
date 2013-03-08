@@ -1,6 +1,6 @@
 /// <reference path="jquery.d.ts" /> 
 
-module Service {
+module ProviderService {
 
 	export interface IProviderService {
 		apiUrl: string;
@@ -178,9 +178,9 @@ module Processor {
 
 
 	(function() {
-		var hatena = new Service.HatenaService();
-		var facebook = new Service.FacebookService();
-		var twitter = new Service.TwitterService();
+		var hatena = new ProviderService.HatenaService();
+		var facebook = new ProviderService.FacebookService();
+		var twitter = new ProviderService.TwitterService();
 
 		var hatenaCount = hatena.getCount(targetUrl);
 		console.log('[hatenaCount]' + hatenaCount);
