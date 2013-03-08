@@ -1,6 +1,6 @@
 var Processor;
 (function (Processor) {
-    Processor.getAllCount = function (tabId, targetUrl) {
+    function getSocialInfo(tabId, targetUrl) {
         console.log('[tabId]' + tabId);
         console.log('[targetUrl]' + targetUrl);
         targetUrl = targetUrl.trim();
@@ -28,27 +28,30 @@ var Processor;
         }).fail(function () {
             console.log('fail');
         });
-    };
-    var badge = new TabService.Badge('-', TabService.getColorCode(0).toString());
-    TabService.setBadge(badge);
+    }
+    ;
+    (function () {
+        var badge = new TabService.Badge('-', TabService.getColorCode(0).toString());
+        TabService.setBadge(badge);
+    })();
     chrome.tabs.onCreated.addListener(function (tab) {
         var tabId = tab.id;
         var tabUrl = tab.url;
         console.log('[onCreated]' + tabId);
         console.log('[onCreated]' + tabUrl);
-        Processor.getAllCount(tabId, tabUrl);
+        getSocialInfo(tabId, tabUrl);
     });
     chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         var tabUrl = tab.url;
         console.log('[onUpdated]' + tabId);
         console.log('[onUpdated]' + tabUrl);
-        Processor.getAllCount(tabId, tabUrl);
+        getSocialInfo(tabId, tabUrl);
     });
     chrome.tabs.onActivated.addListener(function (activeInfo) {
         var tabId = activeInfo.tabId;
         console.log('[onActivated]' + tabId);
         TabService.getTabInfo(tabId).done(function (tabUrl) {
-            Processor.getAllCount(tabId, tabUrl);
+            getSocialInfo(tabId, tabUrl);
         }).fail(function () {
             console.log('[onActivated]' + 'fail');
         });

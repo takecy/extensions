@@ -57,9 +57,13 @@ module Processor {
 			Render.renderProvider('twitter');
 			Render.renderProvider('facebook');
 
-			Render.renderIcon('http://dl.dropbox.com/u/2494314/favicon/hatebu.png', 'hatena');
-			Render.renderIcon('http://dl.dropbox.com/u/2494314/favicon/twitter.png', 'twitter');
-			Render.renderIcon('http://dl.dropbox.com/u/2494314/favicon/like.jpg', 'facebook');
+			//Render.renderIcon('http://dl.dropbox.com/u/2494314/favicon/hatebu.png', 'hatena');
+			//Render.renderIcon('http://dl.dropbox.com/u/2494314/favicon/twitter.png', 'twitter');
+			//Render.renderIcon('http://dl.dropbox.com/u/2494314/favicon/like.jpg', 'facebook');
+
+			Render.renderIcon('img/hatebu.png', 'hatena');
+			Render.renderIcon('img/twitter.png', 'twitter');
+			Render.renderIcon('img/like.jpg', 'facebook');
 
 			Render.renderCount(countInfo.hatena.link, hatenaCount, 'hatena');
 			Render.renderCount(countInfo.twitter.link, tweetCount, 'twitter');

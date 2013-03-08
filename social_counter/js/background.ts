@@ -2,7 +2,7 @@
 
 module Processor {
 
-	export var getAllCount = function(tabId: number, targetUrl: string): any {
+	function getSocialInfo(tabId: number, targetUrl: string): any {
 		console.log('[tabId]' + tabId);
 		console.log('[targetUrl]' + targetUrl);
 		targetUrl = targetUrl.trim();
@@ -43,8 +43,10 @@ module Processor {
 	};
 
 	//badge init
-	var badge = new TabService.Badge('-', TabService.getColorCode(0).toString());
-	TabService.setBadge(badge);
+	(function(){
+		var badge = new TabService.Badge('-', TabService.getColorCode(0).toString());
+		TabService.setBadge(badge);
+	})();
 
 	//create
 	chrome.tabs.onCreated.addListener(function(tab) {
@@ -52,7 +54,7 @@ module Processor {
 		var tabUrl = tab.url;
 		console.log('[onCreated]' + tabId);
 		console.log('[onCreated]' + tabUrl);
-		getAllCount(tabId, tabUrl);
+		getSocialInfo(tabId, tabUrl);
 	});
 
 	//update
@@ -60,7 +62,7 @@ module Processor {
 		var tabUrl = tab.url;
 		console.log('[onUpdated]' + tabId);
 		console.log('[onUpdated]' + tabUrl);
-		getAllCount(tabId, tabUrl);
+		getSocialInfo(tabId, tabUrl);
 	});
 
 	//activate
@@ -70,7 +72,7 @@ module Processor {
 
 		TabService.getTabInfo(tabId)
 		.done(function(tabUrl){
-			getAllCount(tabId, tabUrl);
+			getSocialInfo(tabId, tabUrl);
 		})
 		.fail(function(){
 			console.log('[onActivated]' + 'fail');
