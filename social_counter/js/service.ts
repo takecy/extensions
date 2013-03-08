@@ -16,7 +16,8 @@ module ProviderService {
 	export interface IProviderService {
 		apiUrl: string;
 		getCount: (targetUrl: string) => any;
-		parseJson: (json: string) => number;
+		parseCount: (json: string) => number;
+		parseLink: (json: string) => string;
 	}
 
 	export class BaseProviderService implements IProviderService {
@@ -29,11 +30,14 @@ module ProviderService {
 				console.log('[provider]');
 				console.log(json);
 
-				var count = that.parseJson(json);
+				var count = that.parseCount(json);
 				console.log(count);
 
-				if(!count) deferred.resolve(0);
-				else deferred.resolve(count);
+				var link = that.parseLink(json);
+				console.log(link);
+
+				if(!count) deferred.resolve(new SocialInfo(0, link));
+				else deferred.resolve(new SocialInfo(count, link));
 			})
 			.fail(function(){
 				deferred.reject();
@@ -41,21 +45,30 @@ module ProviderService {
 
 			return deferred.promise();
 		}
+
+		parseLink(json: string): string {
+			return '';
+		}
 	}
 
 	export class HatenaService extends BaseProviderService {
 		private apiUrl = 'http://b.hatena.ne.jp/entry/jsonlite/?url=';
 		
-		parseJson(json: string): number {
+		parseCount(json: string): number {
             if(json) return json['count'];
             return 0;
+		}
+
+		parseLink(json: string): string {
+			if(json) return json['entry_url'];
+			return '';
 		}
 	}
 
 	export class TwitterService extends BaseProviderService {
 		private apiUrl = 'http://urls.api.twitter.com/1/urls/count.json?url=';
 
-		parseJson(json: string): number {
+		parseCount(json: string): number {
             if(json) return json['count'];
             return 0;
 		}
@@ -64,11 +77,16 @@ module ProviderService {
 	export class FacebookService extends BaseProviderService {
 		private apiUrl = 'https://graph.facebook.com/';
 
-		parseJson(json: string): number {
+		parseCount(json: string): number {
             if(json) return json['shares'];
             return 0;
 		}
 	}
+
+	export class SocialInfo {
+		constructor(public count: string, public link: string){ };
+	}
+
 
 	function fetchApi(apiUrl: string, targetUrl: string) {	
     	console.log('[fetchApi]' + apiUrl + targetUrl);

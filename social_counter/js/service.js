@@ -22,17 +22,22 @@ var ProviderService;
             fetchApi(this.apiUrl, targetUrl).done(function (json) {
                 console.log('[provider]');
                 console.log(json);
-                var count = that.parseJson(json);
+                var count = that.parseCount(json);
                 console.log(count);
+                var link = that.parseLink(json);
+                console.log(link);
                 if(!count) {
-                    deferred.resolve(0);
+                    deferred.resolve(new SocialInfo(0, link));
                 } else {
-                    deferred.resolve(count);
+                    deferred.resolve(new SocialInfo(count, link));
                 }
             }).fail(function () {
                 deferred.reject();
             });
             return deferred.promise();
+        };
+        BaseProviderService.prototype.parseLink = function (json) {
+            return '';
         };
         return BaseProviderService;
     })();
@@ -44,11 +49,17 @@ var ProviderService;
 
             this.apiUrl = 'http://b.hatena.ne.jp/entry/jsonlite/?url=';
         }
-        HatenaService.prototype.parseJson = function (json) {
+        HatenaService.prototype.parseCount = function (json) {
             if(json) {
                 return json['count'];
             }
             return 0;
+        };
+        HatenaService.prototype.parseLink = function (json) {
+            if(json) {
+                return json['entry_url'];
+            }
+            return '';
         };
         return HatenaService;
     })(BaseProviderService);
@@ -60,7 +71,7 @@ var ProviderService;
 
             this.apiUrl = 'http://urls.api.twitter.com/1/urls/count.json?url=';
         }
-        TwitterService.prototype.parseJson = function (json) {
+        TwitterService.prototype.parseCount = function (json) {
             if(json) {
                 return json['count'];
             }
@@ -76,7 +87,7 @@ var ProviderService;
 
             this.apiUrl = 'https://graph.facebook.com/';
         }
-        FacebookService.prototype.parseJson = function (json) {
+        FacebookService.prototype.parseCount = function (json) {
             if(json) {
                 return json['shares'];
             }
@@ -85,6 +96,14 @@ var ProviderService;
         return FacebookService;
     })(BaseProviderService);
     ProviderService.FacebookService = FacebookService;    
+    var SocialInfo = (function () {
+        function SocialInfo(count, link) {
+            this.count = count;
+            this.link = link;
+        }
+        return SocialInfo;
+    })();
+    ProviderService.SocialInfo = SocialInfo;    
     function fetchApi(apiUrl, targetUrl) {
         console.log('[fetchApi]' + apiUrl + targetUrl);
         var deferred = $.Deferred();

@@ -7,17 +7,17 @@ var Processor;
         var hatena = new ProviderService.HatenaService();
         var facebook = new ProviderService.FacebookService();
         var twitter = new ProviderService.TwitterService();
-        $.when(hatena.getCount(targetUrl), facebook.getCount(targetUrl), twitter.getCount(targetUrl)).done(function (hatenaCount, likeCount, tweetCount) {
-            console.log('[hatena]' + hatenaCount);
-            console.log('[like]' + likeCount);
-            console.log('[tweet]' + tweetCount);
-            var totalCount = parseInt(hatenaCount) + parseInt(likeCount) + parseInt(tweetCount);
+        $.when(hatena.getCount(targetUrl), facebook.getCount(targetUrl), twitter.getCount(targetUrl)).done(function (hatena, facebook, twitter) {
+            console.log('[hatena]' + hatena);
+            console.log('[like]' + facebook);
+            console.log('[tweet]' + twitter);
+            var totalCount = parseInt(hatena.count) + parseInt(facebook.count) + parseInt(twitter.count);
             console.log('[total]' + totalCount);
             var countInfo = {
-                hatenaCount: hatenaCount,
-                likeCount: likeCount,
-                tweetCount: tweetCount,
-                totalCount: totalCount
+                hatena: hatena,
+                facebook: facebook,
+                twitter: twitter,
+                total: new ProviderService.SocialInfo(totalCount.toString(), '')
             };
             console.log(JSON.stringify(countInfo));
             localStorage.setItem(tabId.toString(), JSON.stringify(countInfo));
