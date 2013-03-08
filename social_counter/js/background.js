@@ -1,6 +1,6 @@
 var Processor;
 (function (Processor) {
-    function getSocialInfo(tabId, targetUrl) {
+    function getSocialInfo(tabId, targetUrl, callback) {
         console.log('[tabId]' + tabId);
         console.log('[targetUrl]' + targetUrl);
         targetUrl = targetUrl.trim();
@@ -13,6 +13,9 @@ var Processor;
             console.log('[tweet]' + twitter);
             var totalCount = parseInt(hatena.count) + parseInt(facebook.count) + parseInt(twitter.count);
             console.log('[total]' + totalCount);
+            if(totalCount > 9999) {
+                totalCount = 9999;
+            }
             var countInfo = {
                 hatena: hatena,
                 facebook: facebook,
@@ -21,17 +24,18 @@ var Processor;
             };
             console.log(JSON.stringify(countInfo));
             localStorage.setItem(tabId.toString(), JSON.stringify(countInfo));
-            var colorCode = TabService.getColorCode(totalCount).toString();
-            Animation.rotateIcon();
-            var badge = new TabService.Badge(totalCount.toString(), colorCode);
-            TabService.setBadge(badge);
+            if(callback) {
+                callback(totalCount);
+            }
         }).fail(function () {
             console.log('fail');
+            var badge = new TabService.Badge('error', TabService.getColorCode(0).toString());
+            TabService.setBadge(badge);
         });
     }
     ;
     (function () {
-        var badge = new TabService.Badge('-', TabService.getColorCode(0).toString());
+        var badge = new TabService.Badge('load...', TabService.getColorCode(0).toString());
         TabService.setBadge(badge);
     })();
     chrome.tabs.onCreated.addListener(function (tab) {
@@ -39,19 +43,42 @@ var Processor;
         var tabUrl = tab.url;
         console.log('[onCreated]' + tabId);
         console.log('[onCreated]' + tabUrl);
-        getSocialInfo(tabId, tabUrl);
+        var active = tab.active;
+        if(!tabUrl || !active) {
+            return;
+        }
+        getSocialInfo(tabId, tabUrl, null);
     });
     chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         var tabUrl = tab.url;
         console.log('[onUpdated]' + tabId);
         console.log('[onUpdated]' + tabUrl);
-        getSocialInfo(tabId, tabUrl);
+        var countInfo_before = localStorage.getItem(tabId);
+        if(typeof countInfo_before === 'undefined') {
+            var totalCount_before = 0;
+        } else {
+            var totalCount_before = countInfo_before.total.count;
+        }
+        getSocialInfo(tabId, tabUrl, function (totalCount) {
+            if(totalCount_before === totalCount) {
+                return;
+            }
+            var colorCode = TabService.getColorCode(totalCount).toString();
+            Animation.rotateIcon();
+            var badge = new TabService.Badge(totalCount.toString(), colorCode);
+            TabService.setBadge(badge);
+        });
     });
     chrome.tabs.onActivated.addListener(function (activeInfo) {
         var tabId = activeInfo.tabId;
         console.log('[onActivated]' + tabId);
         TabService.getTabInfo(tabId).done(function (tabUrl) {
-            getSocialInfo(tabId, tabUrl);
+            getSocialInfo(tabId, tabUrl, function (totalCount) {
+                var colorCode = TabService.getColorCode(totalCount).toString();
+                Animation.rotateIcon();
+                var badge = new TabService.Badge(totalCount.toString(), colorCode);
+                TabService.setBadge(badge);
+            });
         }).fail(function () {
             console.log('[onActivated]' + 'fail');
         });
