@@ -193,7 +193,7 @@ var TabService;
 var Animation;
 (function (Animation) {
     function rotateIcon() {
-        var iconPath = 'img/google_128.png';
+        var iconPath = 'img/stars.png';
         var canvas = $("<canvas>").attr("width", "19").attr("height", "19")[0];
         var icon = new Image();
         icon.src = iconPath;

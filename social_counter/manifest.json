@@ -1,6 +1,6 @@
 {
   "name": "Social counter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "Social counter",
   "icons": { "128": "img/stars.png" },
@@ -8,8 +8,6 @@
     "http://b.hatena.ne.jp/*",
     "https://graph.facebook.com/*",
     "http://urls.api.twitter.com/*",
-    "http://*/*",
-    "https://*/*",
     "tabs"
   ],
    "browser_action": {
@@ -18,7 +16,6 @@
       "38": "img/stars.png"
     },
     "default_title": "Social Counter",
-    //これを指定しているとアイコンのonClickedイベント拾えない
     "default_popup": "popup.html"
   },
   "background": {
