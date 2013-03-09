@@ -13,9 +13,12 @@ module Processor {
 
 		$.when(hatena.getCount(targetUrl), facebook.getCount(targetUrl), twitter.getCount(targetUrl))
 		.done(function(hatena, facebook, twitter){
-			console.log('[hatena]' + hatena);
-			console.log('[like]' + facebook);
-			console.log('[tweet]' + twitter);
+			console.log('[hatena]');
+			console.log(hatena);
+			console.log('[twitter]');
+			console.log(twitter);
+			console.log('[facebook]');
+			console.log(facebook);
 
 			var totalCount = parseInt(hatena.count) + parseInt(facebook.count) + parseInt(twitter.count);
 			console.log('[total]' + totalCount);
@@ -65,10 +68,14 @@ module Processor {
 		console.log('[onUpdated]' + tabId);
 		console.log('[onUpdated]' + tabUrl);
 
-		//TODO
-		var countInfo_before = JSON.parse(localStorage.getItem(tabId));
-		if(typeof countInfo_before === 'undefined') var totalCount_before = 0;
-		else var totalCount_before = countInfo_before.total.count;
+		var countInfo_before = localStorage.getItem(tabId);
+		console.log('[countInfo_before]' + countInfo_before);
+
+		var totalCount_before = 0;
+		if(typeof countInfo_before != 'undefined' && countInfo_before != null)
+			totalCount_before = JSON.parse(countInfo_before).total.count;
+
+		console.log('[totalCount_before]' + totalCount_before);
 
 		getSocialInfo(tabId, tabUrl, function(totalCount){
 			if(totalCount_before === totalCount) return;
