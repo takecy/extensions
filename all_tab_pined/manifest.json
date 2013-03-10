@@ -10,8 +10,12 @@
     "scripts": ["js/background.js"]
   },
   "commands": {
-    "toggle-pin": {
+    "toggle-pin-all": {
       "suggested_key": { "default": "Alt+Shift+Q" },
+      "description": "Toggle tab pin"
+    },
+    "toggle-pin": {
+      "suggested_key": { "default": "Alt+Shift+1" },
       "description": "Toggle tab pin"
     }
   },
