@@ -1,17 +1,23 @@
 $(function() {
 
+    var setUnderline = function() {
+        $('#tads a, #tadsb a, #res a, #rhs a, #taw a').each(function(index) {
+            $(this).css('text-decoration', 'underline');
+        });
+    };
+
     //API url
     var hatenaApi = 'http://b.hatena.ne.jp/entry/jsonlite/';
     var facebookApi = 'https://graph.facebook.com/';
     var tweetApi = 'http://urls.api.twitter.com/1/urls/count.json?url=';
 
 	var setFavicon = function() {
-		var $links = $('div#ires ol#rso li.g div.vsc h3.r a.l');
-		
+        var $links = $('#rso div.srg li.g div.rc > h3.r > a');
+
 		$links.each(function(index) {
             var $targetObj = $(this).parent();
 			//設定済み
-			if($targetObj.find('img.favicon').length > 0) return;
+			if($targetObj.find('div.sbm_count').length > 0) return;
 			
             //-------------------------------------------------------------------------
 			//favicon
@@ -160,6 +166,7 @@ $(function() {
 	//AutoPagerizeでページが継ぎ足されたイベントをbind
 	$('body').on('AutoPagerize_DOMNodeInserted', function(){
 		setFavicon();
+        setUnderline();
 	});
 	
 	

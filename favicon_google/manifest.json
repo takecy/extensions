@@ -1,6 +1,6 @@
 {
   "name": "Favicon and Social for Google in AutoPagerize",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "manifest_version": 2,
   "description": "Favicon and Social count is prepended Page Title of Google search results. Corresponds to the AutoPagerize.",
   "icons": { "128": "img/google_128.png" },
