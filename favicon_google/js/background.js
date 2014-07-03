@@ -85,7 +85,7 @@ $(function() {
             }, $commentDiv);
 
             
-            //like
+            //facebook
             setSbmInfo($likeSpan, url, facebookApi, $likeIcon, 'like', function(json){
                 var count = json['shares'];
                 if(!count) return 0;
@@ -181,6 +181,6 @@ $(function() {
 		// }
 	// });
 
-
+    setUnderline();
 	setFavicon();
 });
