@@ -1,15 +1,9 @@
 $(function() {
 
-    var setUnderline = function() {
-        $('#tads a, #tadsb a, #res a, #rhs a, #taw a').each(function(index) {
-            $(this).css('text-decoration', 'underline');
-        });
-    };
-
     //API url
-    var hatenaApi = 'http://b.hatena.ne.jp/entry/jsonlite/';
-    var facebookApi = 'https://graph.facebook.com/';
-    var tweetApi = 'http://urls.api.twitter.com/1/urls/count.json?url=';
+    var HATENA = 'http://b.hatena.ne.jp/entry/jsonlite/';
+    var FACEBOOK = 'https://graph.facebook.com/';
+    var TWITTER = 'http://urls.api.twitter.com/1/urls/count.json?url=';
 
 	var setFavicon = function() {
         var $links = $('#rso div.srg li.g div.rc > h3.r > a');
@@ -49,7 +43,7 @@ $(function() {
             $sbmDiv.append($hatenaSpan).append($likeSpan).append($tweetSpan);
             
             //hatena
-            setSbmInfo($hatenaSpan, url, hatenaApi, $hatenIcon, 'hatena', function(json){
+            setSbmInfo($hatenaSpan, url, HATENA, $hatenIcon, 'hatena', function(json){
                 if(json) return json['count'];
                 return 0;
             },
@@ -77,8 +71,6 @@ $(function() {
                     targetObj.append($rowDiv.append($userSpan).append($dateSpan).append($commentSpan));
                 });
                 
-                console.log(targetObj.find('.row').length);
-                
                 if(targetObj.find('.row').length == 0)
                 	targetObj.append($('<div>').addClass('row').text('コメントなし'));
                 
@@ -86,14 +78,14 @@ $(function() {
 
             
             //facebook
-            setSbmInfo($likeSpan, url, facebookApi, $likeIcon, 'like', function(json){
+            setSbmInfo($likeSpan, url, FACEBOOK, $likeIcon, 'like', function(json){
                 var count = json['shares'];
                 if(!count) return 0;
                 return count;
             });
             
             //tweet
-            setSbmInfo($tweetSpan, url, tweetApi, $tweetIcon, 'tweet', function(json){
+            setSbmInfo($tweetSpan, url, TWITTER, $tweetIcon, 'tweet', function(json){
                 return json['count'];
             });
             
@@ -123,9 +115,6 @@ $(function() {
             dataType : 'json',
             success : function(json, dataType){
                 var count = parseInt(getCountFunction(json));
-                console.log(serviceName + ':');
-                console.log(json);
-                console.log(serviceName + ':' + count + ':' + targetUrl);
                 
                 //----------------------------------
                 //set sbm count
@@ -163,24 +152,10 @@ $(function() {
         });
     }
     
-	//AutoPagerizeでページが継ぎ足されたイベントをbind
-	$('body').on('AutoPagerize_DOMNodeInserted', function(){
-		setFavicon();
-        setUnderline();
-	});
-	
-	
+    //AutoPagerizeでページが継ぎ足されたイベントをbind
+    $('body').on('AutoPagerize_DOMNodeInserted', function(){
+        setFavicon();
+    });
 
-	// chrome.tabs.onUpdated.addListener(function(tabid, inf) {
-		// if(inf.status === 'complete') {
-			// chrome.pageAction.show(tabid);
-			// chrome.pageAction.setIcon({
-				// tabId : tabid,
-				// path : 'icon.png'
-			// });
-		// }
-	// });
-
-    setUnderline();
 	setFavicon();
 });
